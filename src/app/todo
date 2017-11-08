@@ -1,0 +1,60 @@
+todo:
+
+ahh where to start!
+
+
+1 bit display!
+64x64 for lowrezjam
+
+todo:
+basic way of describing sprites (on/off basically)
+jump and move, maybe bounce as a ball
+load map from string and move on it
+then make sprites and upgrade to describing and drawing sprites
+then enemies
+and/or monsters
+still use the cave idea, so anything col=0 you can jump on
+maybe no monsters?
+or two carts, one with, one without
+
+goal is be able to make small 2d platformer AND 2d zeldalike
+and fudge it to also create a pong and space invaders type game
+and perhaps pacman and snake/arkanoid
+sample screen size
+ideally with some console around it
+load player pos and sprite, 
+init() - what do the buttons do?
+	eg. move player forward 1 pix UNLESS blocked by collidables (default)
+	also background and foreground collections
+	and objects (interactable)
+		basiaclly events. step on this and change music (if not already playing)
+		or play sound or spawn enemy or whatever
+	what's the player sprite? (fixed size)
+	animations?
+	e.g. weapon is controlled by A, has these sprites and is in action in sprites #2 and #3
+	support for bow and arrow/gun as well
+	init map
+	what's the main menu? graphics and menu options
+	is camera following player or per-screen. those are your options.
+update()
+	auto-move anything?
+	ai for enemies, eg.: if player is x squares away, do this.
+draw()
+	anything static?
+	e.g ui and inventory
+
+load brings up a form which loads json just like that, ez, can also just write "cave" for example games
+
+
+"light" button for brighter colour(s)
+
+
+
+
+
+
+
+
+
+once all is done, make a dollarmakermaker, which lets you draw sprites and make music(?) and draw maps and create events and basically make games
+the Dollar ONE.
