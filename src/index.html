@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Frank in the Disco Dimensions</title>
+
+		<style>
+		html { overflow: none; }
+  *{position:fixed}
+  #a{width:100vmin;top:50%;left:50%;transform:translateX(-50%)translateY(-50%);background:#000}
+  #i{top:47%;left:33%;border-style: none; border-color: transparent; overflow: auto;}
+</style>
+	</head>
+	<body style="background-color:#000;">
+		<canvas id="a" width="1000" height="1000"></canvas>
+		<div id="i" cols="20" rows="1"  style="border: none; border-style: none; border-color: transparent; overflow: auto;font-family:Verdana; font-size:60px;"></div>
+		<audio id="hihat"></audio>
+		<audio id="snare"></audio>
+		<audio id="bass"></audio>
+		<audio id="crash"></audio>
+		<audio id="bell"></audio>
+		<audio id="song1"></audio>
+	</body>
+		<script>
+let click_x = -1
+let click_y = -1
+
+let canvas_size=1000
+let canvas_left=0
+let canvas_top=0
+
+onresize=onrotate=b=>{
+  b=a.getBoundingClientRect()
+  canvas_size=b.width
+  canvas_left=b.left
+  canvas_top=b.top
+}
+let mouse_x = 0
+let mouse_y = 0
+update_mouse=e=>{
+	if (e.pageX == undefined) {
+	    if (e.changedTouches != undefined && e.changedTouches[0] != undefined) {
+		    mouse_x = e.changedTouches[0].pageX
+		    mouse_y = e.changedTouches[0].pageY
+	    }
+	}
+	else {
+	    mouse_x = e.pageX
+	    mouse_y = e.pageY
+	}
+
+    mouse_x = ~~((mouse_x-canvas_left)*1000/canvas_size)
+    mouse_y = ~~((mouse_y)*1000/canvas_size)
+    
+    return [mouse_x,mouse_y]
+}
+onclick=e=>{
+  [click_x,click_y]=update_mouse(e)
+}
+onload=e=>{
+  onresize()
+}
+</script></html>
