@@ -3,8 +3,8 @@
 class Player {
 	constructor(x,y,particleManager) {
 		this.particleManager = particleManager
-		let canvas = document.getElementById('a')
-		this.context = canvas.getContext('2d')
+		this.canvas = document.getElementById('a')
+		this.context = this.canvas.getContext('2d')
 		this.x = x
 		this.y = y
 		this.update = this.update.bind(this)
@@ -20,6 +20,20 @@ class Player {
 		this.money = 0
 		this.step = 0
 		this.radius = 20
+		// bottom up
+		this.bitmap = [
+						[false,false,false,true,true,false,false,false],
+						[false,false,false,true,true,true,false,false],
+						[false,false,false,true,true,false,false,false],
+						[false,true,true,true,true,true,true,false],
+						[true,false,true,true,true,true,false,true],
+						[true,false,true,true,true,true,false,true],
+						[false,false,true,true,true,true,false,false],
+						[false,false,true,false,false,true,false,false],
+						[false,false,true,false,false,true,false,false],
+						[false,false,true,true,false,true,true,false] ]
+		this.bitmapY = 10
+		this.bitmapX = 8
 	}
 
 	update(enemies) {
@@ -55,6 +69,18 @@ class Player {
 		}
 	}
 	render() {
+		for (let y=1; y<=this.bitmapY; y++) {
+			for (let x=0; x<this.bitmapX; x++) {
+				if (this.bitmap[this.bitmapY-y][x]) {
+					//this.screen[this.y-y][x] = true
+					
+					this.context.fillRect((this.x+x)/100*this.canvas.width,(this.y-y)/100*this.canvas.height,this.canvas.height/100,this.canvas.height/100)
+				}
+			}
+		}
+
+	}
+	renderold() {
 		if (this.dead == false) {
 	    	this.context.beginPath()
 	    	this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false)

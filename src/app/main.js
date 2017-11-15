@@ -23,7 +23,7 @@ class Main {
 		this.gameStarted = false
 
 		this.particleManager = new ParticleManager()
-		this.player = new Player(500,this.canvas.height / 2, this.particleManager)
+		this.player = new Player(20,20, this.particleManager)
 		this.bulletManager = new BulletManager(this.particleManager, this.player)
 
 		this.screen = this.createArray(100,100)
@@ -34,6 +34,10 @@ class Main {
 			this.map[97][i] = true
 			this.map[199][i+10] = true
 		}
+		this.leftPressed = false
+		this.rightPressed = false
+		window.addEventListener('keydown', this.keyEventDown, false)
+		window.addEventListener('keyup', this.keyEventUp, false)
 
 	}
 	createArray(length) {
@@ -48,16 +52,53 @@ class Main {
     	return arr;
 	}
 
-	update() {	
+	
+	keyEventDown(e) {
+		switch (e.keyCode) {
+			case 37:
+				this.leftPressed = true
+				break
+			case 39:
+				this.rightPressed = true
+				break
+			default: this.randomImage()
+		}
+	}
+	keyEventUp(e) {
+		switch (e.keyCode) {
+			case 37:
+				this.leftPressed = false
+				break
+			case 39:
+				this.rightPressed = false
+				break
+			default:// alert(e.keyCode)
+		}
+	}
+	update() {
 		this.step = this.step + 1
 		
-
+		if (this.step === 100) {
+			//document.getElementById("i").style.display = "none";
+			this.state = 1
+		}
 		if (this.player.dead == false && this.win == false) {
 //				this.bulletManager.activate('#FFFF01', -1, this.canvas.height / 2, 3, 2, 0, this.smallBulletReward)
 
 		}
-		this.bulletManager.update()
-		this.particleManager.update()
+//		this.bulletManager.update()
+//		this.particleManager.update()
+
+		if (this.leftPressed) {
+			this.player.x -= 1
+//			this.leftPressed = false
+
+		}
+		else if (this.rightPressed) {
+			this.player.x += 1
+	//		this.rightPressed = false
+
+		}
 
 		if ((this.player.dead || this.win) && this.fontSize < 120) {
 			this.fontSize += 1
