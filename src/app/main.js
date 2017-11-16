@@ -15,6 +15,8 @@ class Main {
 		this.step = 0
 		this.update = this.update.bind(this)
 		this.render = this.render.bind(this)
+		this.keyEventDown = this.keyEventDown.bind(this)
+		this.keyEventUp = this.keyEventUp.bind(this)
 
 		this.startGame = this.startGame.bind(this)
 
@@ -56,12 +58,13 @@ class Main {
 	keyEventDown(e) {
 		switch (e.keyCode) {
 			case 37:
+			
 				this.leftPressed = true
 				break
 			case 39:
 				this.rightPressed = true
 				break
-			default: this.randomImage()
+			default:
 		}
 	}
 	keyEventUp(e) {
@@ -77,7 +80,7 @@ class Main {
 	}
 	update() {
 		this.step = this.step + 1
-		
+		this.player.update(null, this.map)
 		if (this.step === 100) {
 			//document.getElementById("i").style.display = "none";
 			this.state = 1
@@ -91,6 +94,7 @@ class Main {
 
 		if (this.leftPressed) {
 			this.player.x -= 1
+			
 //			this.leftPressed = false
 
 		}

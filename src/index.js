@@ -575,12 +575,12 @@ function startDemo() {
 //startDemo()
 
 this.game = new Main()
-
+/*
 a.onclick=e=>{ 
 	[click_x,click_y]=update_mouse(e)
-	this.game.click() 
+	//this.game.click() 
 }
-
+*/
 MainLoop.setUpdate(this.game.update).setDraw(this.game.render)
 MainLoop.start()
 /*

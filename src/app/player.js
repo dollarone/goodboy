@@ -35,8 +35,11 @@ class Player {
 		this.bitmapY = 10
 		this.bitmapX = 8
 	}
+	update(enemies, screen) {
+		if (!screen[this.y][this.x+3]) {
+			this.y+=1
+		}
 
-	update(enemies) {
 		if (this.triggerCountdown == 1) {
 			this.triggerCountdown = 0	
 		}
@@ -45,7 +48,7 @@ class Player {
 		}
 
 
-		if (this.dead == false) {
+		if (this.dead == false && enemies != null) {
 			this.step++
 			this.x += this.speed
 			if (this.hurtCountdown == 1) {
@@ -68,7 +71,11 @@ class Player {
 			}
 		}
 	}
+	move(x) {
+
+	}
 	render() {
+
 		for (let y=1; y<=this.bitmapY; y++) {
 			for (let x=0; x<this.bitmapX; x++) {
 				if (this.bitmap[this.bitmapY-y][x]) {
