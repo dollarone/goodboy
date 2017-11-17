@@ -582,6 +582,8 @@ a.onclick=e=>{
 }
 */
 MainLoop.setUpdate(this.game.update).setDraw(this.game.render)
+
+this.game.setMainLoop(MainLoop)
 MainLoop.start()
 /*
 function stateChange(newState) {

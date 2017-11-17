@@ -34,10 +34,56 @@ class Player {
 						[false,false,true,true,false,true,true,false] ]
 		this.bitmapY = 10
 		this.bitmapX = 8
+
+		this.vy = 0
+		this.gravity = 300
+		this.jump_force = -100
+		this.y_pos = this.y
+		this.y_speed = 1
 	}
-	update(enemies, screen) {
-		if (!screen[this.y][this.x+3]) {
-			this.y+=1
+	/*
+	
+<kdrnic> can you do shorter jumps by releasing quickly and taller ones by holding on
+<kdrnic> do you have a small time after which you can still jump even after you move off a platform
+*/
+	update(timeStep, screen, enemies) {
+		//console.log("a " +screen)
+		//console.log("b " +screen[this.y])
+		console.log(this.y + "," + this.x+3)
+		console.log("c " + screen[this.y][this.x+3])
+		if(!screen[this.y][this.x+3]) {
+			//this.y+=1
+			this.vy += this.gravity * timeStep
+		}
+		console.log("timestep: " + timeStep)
+		if (this.y_speed != 0) {
+			let y_prev = this.y
+			this.y_pos += this.vy * timeStep
+			this.y = Math.floor(this.y_pos)
+			if (this.vy > 0) {
+
+			}
+			if (!screen[this.y][this.x+3]) {
+				//this.y+=1
+			}
+			let y_delta = this.y
+			if (y_prev < this.y) {
+				for(y_delta; y_delta > y_prev; y_delta--) {
+					if(screen[y_delta][this.x+3]) {
+						this.y = y_delta
+						this.vy = 0
+					}
+				}
+			}
+			else {
+				
+			}
+			if(screen[y_delta][this.x+3]) {
+				this.y = y_delta
+			}
+
+
+
 		}
 
 		if (this.triggerCountdown == 1) {
@@ -71,9 +117,7 @@ class Player {
 			}
 		}
 	}
-	move(x) {
 
-	}
 	render() {
 
 		for (let y=1; y<=this.bitmapY; y++) {

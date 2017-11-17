@@ -40,6 +40,7 @@ class Main {
 		this.rightPressed = false
 		window.addEventListener('keydown', this.keyEventDown, false)
 		window.addEventListener('keyup', this.keyEventUp, false)
+		this.mainLoop = null
 
 	}
 	createArray(length) {
@@ -61,6 +62,9 @@ class Main {
 			
 				this.leftPressed = true
 				break
+			case 38:
+				this.player.vy = this.player.jump_force
+				break
 			case 39:
 				this.rightPressed = true
 				break
@@ -75,12 +79,15 @@ class Main {
 			case 39:
 				this.rightPressed = false
 				break
-			default:// alert(e.keyCode)
+			default: //alert(e.keyCode)
 		}
+	}
+	setMainLoop(mainLoop) {
+		this.mainLoop = mainLoop
 	}
 	update() {
 		this.step = this.step + 1
-		this.player.update(null, this.map)
+		this.player.update(this.mainLoop.getSimulationTimestep()/1000, this.map, this.enemies)
 		if (this.step === 100) {
 			//document.getElementById("i").style.display = "none";
 			this.state = 1
