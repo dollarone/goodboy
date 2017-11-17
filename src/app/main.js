@@ -38,6 +38,7 @@ class Main {
 		}
 		this.leftPressed = false
 		this.rightPressed = false
+		this.jumpPressed = false
 		window.addEventListener('keydown', this.keyEventDown, false)
 		window.addEventListener('keyup', this.keyEventUp, false)
 		this.mainLoop = null
@@ -63,7 +64,7 @@ class Main {
 				this.leftPressed = true
 				break
 			case 38:
-				this.player.vy = this.player.jump_force
+				this.jumpPressed = true
 				break
 			case 39:
 				this.rightPressed = true
@@ -75,6 +76,9 @@ class Main {
 		switch (e.keyCode) {
 			case 37:
 				this.leftPressed = false
+				break
+			case 38:
+				this.jumpPressed = false
 				break
 			case 39:
 				this.rightPressed = false
@@ -98,6 +102,9 @@ class Main {
 		}
 //		this.bulletManager.update()
 //		this.particleManager.update()
+		if (this.jumpPressed) {
+			this.player.jumpPressed()
+		}
 
 		if (this.leftPressed) {
 			this.player.x -= 1

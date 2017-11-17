@@ -11,6 +11,7 @@ class Player {
 		this.render = this.render.bind(this)
 		this.damage = this.damage.bind(this)
 		this.hurt = this.hurt.bind(this)
+		this.jumpPressed = this.jumpPressed.bind(this)
 		this.dead = false
 		this.hp = 20
 		this.hurtCountdown = 0
@@ -37,16 +38,18 @@ class Player {
 
 		this.vy = 0
 		this.gravity = 300
-		this.jump_force = -100
+		this.jump_force = -70
 		this.y_pos = this.y
 		this.y_speed = 1
 	}
 	/*
 	
-<kdrnic> can you do shorter jumps by releasing quickly and taller ones by holding on
+<kdrnic> can you do shorter jumps by releasing quickly and taller ones by holding on YES
 <kdrnic> do you have a small time after which you can still jump even after you move off a platform
 */
 	update(timeStep, screen, enemies) {
+		//  TODO need to special case out of bonds
+
 		//console.log("a " +screen)
 		//console.log("b " +screen[this.y])
 		console.log(this.y + "," + this.x+3)
@@ -56,7 +59,11 @@ class Player {
 			this.vy += this.gravity * timeStep
 		}
 		console.log("timestep: " + timeStep)
+		if (this.vy != 0) {
+			this.jumpTime += 1
+		}
 		if (this.y_speed != 0) {
+
 			let y_prev = this.y
 			this.y_pos += this.vy * timeStep
 			this.y = Math.floor(this.y_pos)
@@ -72,6 +79,7 @@ class Player {
 					if(screen[y_delta][this.x+3]) {
 						this.y = y_delta
 						this.vy = 0
+						this.jumpTime = 0
 					}
 				}
 			}
@@ -118,14 +126,26 @@ class Player {
 		}
 	}
 
+	jumpPressed() {
+		if (this.jumpTime == 0) {
+			this.vy = this.jump_force
+		}
+		else if (this.jumpTime < 10 && this.vy < 0) {
+			this.vy +=  this.jump_force/10
+		}
+
+	}
+
 	render() {
 
 		for (let y=1; y<=this.bitmapY; y++) {
 			for (let x=0; x<this.bitmapX; x++) {
 				if (this.bitmap[this.bitmapY-y][x]) {
 					//this.screen[this.y-y][x] = true
-					
-					this.context.fillRect((this.x+x)/100*this.canvas.width,(this.y-y)/100*this.canvas.height,this.canvas.height/100,this.canvas.height/100)
+					if (this.bitmapY-y>=0) {
+						this.context.fillRect((this.x+x)/100*this.canvas.width,(this.y-y)/100*this.canvas.height,this.canvas.height/100,this.canvas.height/100)
+					}
+
 				}
 			}
 		}
