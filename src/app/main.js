@@ -35,7 +35,17 @@ class Main {
 			this.map[i][i] = true
 			this.map[97][i] = true
 			this.map[199][i+10] = true
+			if (i>77) {
+				this.map[78][i] = true
+
+			}
 		}
+		this.map[96][20] = true
+		this.map[96][21] = true
+		this.map[95][20] = true
+		this.map[95][21] = true
+		this.map[94][20] = true
+		this.map[94][21] = true
 		this.leftPressed = false
 		this.rightPressed = false
 		this.jumpPressed = false
@@ -91,30 +101,13 @@ class Main {
 	}
 	update() {
 		this.step = this.step + 1
-		this.player.update(this.mainLoop.getSimulationTimestep()/1000, this.map, this.enemies)
+		this.player.update(this.mainLoop.getSimulationTimestep()/1000, this.map, this.enemies, this.jumpPressed, this.leftPressed, this.rightPressed)
 		if (this.step === 100) {
 			//document.getElementById("i").style.display = "none";
 			this.state = 1
 		}
 		if (this.player.dead == false && this.win == false) {
 //				this.bulletManager.activate('#FFFF01', -1, this.canvas.height / 2, 3, 2, 0, this.smallBulletReward)
-
-		}
-//		this.bulletManager.update()
-//		this.particleManager.update()
-		if (this.jumpPressed) {
-			this.player.jumpPressed()
-		}
-
-		if (this.leftPressed) {
-			this.player.x -= 1
-			
-//			this.leftPressed = false
-
-		}
-		else if (this.rightPressed) {
-			this.player.x += 1
-	//		this.rightPressed = false
 
 		}
 

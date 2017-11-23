@@ -47,14 +47,18 @@ class Player {
 <kdrnic> can you do shorter jumps by releasing quickly and taller ones by holding on YES
 <kdrnic> do you have a small time after which you can still jump even after you move off a platform
 */
-	update(timeStep, screen, enemies) {
+	update(timeStep, screen, enemies, jump, moveLeft, moveRight) {
 		//  TODO need to special case out of bonds
 
+		if (jump) { 
+			this.jumpPressed() 
+		}
 		//console.log("a " +screen)
 		//console.log("b " +screen[this.y])
-		console.log(this.y + "," + this.x+3)
-		console.log("c " + screen[this.y][this.x+3])
-		if(!screen[this.y][this.x+3]) {
+		//console.log(this.y + "," + this.x+3)
+		//console.log("c " + screen[this.y][this.x+3])
+		if(screen[this.y][this.x+2] != true && screen[this.y][this.x+3] != true && screen[this.y][this.x+4] != true && screen[this.y][this.x+5] != true &&
+			screen[this.y][this.x+6] != true) {
 			//this.y+=1
 			this.vy += this.gravity * timeStep
 		}
@@ -74,6 +78,7 @@ class Player {
 				//this.y+=1
 			}
 			let y_delta = this.y
+			console.log("up: " + y_delta + " / " + y_prev)
 			if (y_prev < this.y) {
 				for(y_delta; y_delta > y_prev; y_delta--) {
 					if(screen[y_delta][this.x+3]) {
@@ -83,13 +88,37 @@ class Player {
 					}
 				}
 			}
-			else {
+			else { // going up, e.g. old pos > new
+				console.log("jump")
+				//delta is smaller
+				for(y_delta; y_delta <= y_prev; y_delta++) {
+					if(screen[y_delta-12][this.x+3]) {
+						this.y = y_delta
+						this.vy = 0
+//						this.jumpTime = 0
+					}
+				}
 				
 			}
 			if(screen[y_delta][this.x+3]) {
 				this.y = y_delta
 			}
 
+			// x
+			if (moveLeft) {
+				console.log(screen[this.y-1][this.x] + " screen")
+				if (screen[this.y-1][this.x] == true  && screen[this.y-2][this.x] != true && screen[this.y-3][this.x] != true) {
+					this.x-=1
+					this.y-=3
+				}
+				else if (screen[this.y-1][this.x] != true && screen[this.y-2][this.x] != true) {
+					this.x--
+				}
+			}
+
+			if (moveRight) {
+				this.x++
+			}
 
 
 		}
@@ -149,7 +178,9 @@ class Player {
 				}
 			}
 		}
-
+		this.context.fillStyle = '#444'
+		this.context.fillRect((this.x)/100*this.canvas.width,(this.y-1)/100*this.canvas.height,this.canvas.height/100,this.canvas.height/100)
+		this.context.fillStyle = '#000'
 	}
 	renderold() {
 		if (this.dead == false) {
